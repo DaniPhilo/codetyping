@@ -1,0 +1,38 @@
+.typebox-section {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    width: 90%;
+    margin: 1rem auto;
+}
+
+.input-container {
+    position: relative;
+    width: 100%;
+}
+
+p {
+    width: 100%;
+    margin-top: 1rem;
+    color: grey;
+}
+
+textarea {
+    position: absolute;
+    top: 0;
+    left: 0;
+
+    width: 100%;
+    margin-top: 1rem;
+    background-color: transparent;
+    border: none;
+    outline: none;
+    resize: none;
+}
+textarea:focus {
+    border: none;
+    outline: none;
+}
