@@ -7,11 +7,12 @@ const Texts = require('../services/db/texts.json');
 
 export default function Main() {
 
-  const [text, setText] = useState(Texts);
+  const defaultText = Texts[0].text;
+  const [text, setText] = useState(defaultText);
 
   return (
     <main>
-      <TypeBox text={text[0].text}/>
+      <TypeBox text={text} />
     </main>
   )
 }

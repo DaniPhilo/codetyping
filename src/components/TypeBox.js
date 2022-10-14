@@ -1,5 +1,7 @@
 import React from 'react';
-import '../assets/styles/TypeBox.css'
+import '../assets/styles/TypeBox.css';
+
+import Word from './Word';
 
 export default function TypeBox({ text }) {
 
@@ -7,18 +9,16 @@ export default function TypeBox({ text }) {
 
     return (
         <section className="typebox-section">
-            <label htmlFor="input-box">Type:</label>
-            <div className="text-container">
-                <div className="words-container">
-                    {splitText.map(word => {
-                        return <div className='word'>{word}</div>
-                    })}
-                </div>
-                <div className='input-container'>
-                    <textarea name="input-box" id="input-box" cols="90" rows="10"></textarea>
-                </div>
+            <label>Type:</label>
+            <div className='input-container'>
+                <input name="user-input" id='user-input' />
             </div>
-
+            <div className="text-container">
+                {splitText.map((word, i) => {
+                    return <Word key={i} word={word} />
+                })}
+            </div>
+            
         </section>
     )
 }

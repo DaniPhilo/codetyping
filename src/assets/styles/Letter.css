@@ -1,0 +1,11 @@
+.letter {
+    color: grey;
+}
+
+.correct {
+    color: black;
+}
+
+.incorrect {
+    color: red;
+}
