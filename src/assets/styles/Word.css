@@ -2,3 +2,15 @@
     display: flex;
     gap: 0.5px;
 }
+
+.letter {
+    color: grey;
+}
+
+.correct {
+    color: black;
+}
+
+.incorrect {
+    color: red;
+}

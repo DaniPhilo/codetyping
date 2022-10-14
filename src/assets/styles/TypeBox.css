@@ -25,15 +25,15 @@
     left: 2%;
 }
 
-input {
-    /* width: 100%;
+/* input {
+    width: 100%;
     background-color: transparent;
     color: transparent;
     border: none;
     outline: none;
-    resize: none; */
+    resize: none;
 }
 input:focus {
-    /* border: none;
-    outline: none; */
-}
+    border: none;
+    outline: none;
+} */
