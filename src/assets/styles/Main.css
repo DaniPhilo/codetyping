@@ -2,8 +2,8 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: Arial, Helvetica, sans-serif;
-    font-size: 1em;
+    font-family: 'Source Code Pro', monospace;
+    font-size: 1rem;
 }
 
 main {
