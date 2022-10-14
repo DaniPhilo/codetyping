@@ -1,27 +1,31 @@
 import React, { useState, useRef, useEffect } from 'react';
 import '../assets/styles/TypeBox.css';
 
-import Word from './Word';
+// import Word from './Word';
 
 export default function TypeBox({ text }) {
 
     const splitText = text.split(' ');
 
-    const [wordIndex, setWordIndex] = useState(0);
     const [letterIndex, setLetterIndex] = useState(0);
-    const [userInput, setUserInput] = useState(null);
 
-    const wordList = useRef([]);
-    const addWordRef = (ref) => wordList.current.push(ref);
-
-    const letterList = useRef([]);
-    const addLetterRef = (ref) => letterList.current.push(ref);
+    const letterRefList = useRef([]);
+    const addRef = (ref) => letterRefList.current.push(ref);
 
     const handleKeyDown = (event) => {
-        const correct = splitText[wordIndex][letterIndex] === event.key;
-        if (correct) {
-            
-        }
+        const currentLetter = letterRefList.current[letterIndex];
+        const lastLetter = letterRefList.current[letterIndex - 1];
+
+        if (event.key === ' ' && !lastLetter.nextSibling) return
+
+        // if (event.key === 'Backspace' && currentLetter != currentLetter.parentElement.firstChild) {
+        //     console.log('backspace')
+        //     lastLetter.className = '';
+        //     setLetterIndex(prev => prev -= 1);
+        //     return
+        // }
+        const correct = event.key === currentLetter.innerText;
+        currentLetter.classList.add(correct ? 'correct' : 'incorrect');
         setLetterIndex(prev => prev += 1);
     }
 
@@ -35,16 +39,15 @@ export default function TypeBox({ text }) {
             <div className="text-container">
                 {splitText.map((word, i) => {
                     return (
-                        <div key={i} ref={addWordRef} className={i === wordIndex ? 'word current' : 'word'}>
-                            {word.split('').map((letter, i) => {
-                                return <p key={i} ref={addLetterRef} className='letter'>{letter}</p>
+                        <div key={i} className='word'>
+                            {word.split('').map((letter, index) => {
+                                return <p key={index} ref={addRef}>{letter}</p>
                             }
                             )}
                         </div>
                     )
                 })}
             </div>
-
         </section>
     )
 }

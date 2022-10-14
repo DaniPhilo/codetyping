@@ -25,6 +25,23 @@
     left: 2%;
 }
 
+.word {
+    display: flex;
+    gap: 0.5px;
+}
+
+.word > p {
+    color: grey;
+}
+
+.word > .correct {
+    color: black;
+}
+
+.word > .incorrect {
+    color: red;
+}
+
 /* input {
     width: 100%;
     background-color: transparent;
