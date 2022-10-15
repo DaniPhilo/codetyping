@@ -28,8 +28,8 @@ export default function TypeBox({ text }) {
         }
         // Backspace removes classes from letter only if word is current
         if (event.key === 'Backspace') {
-            // If you are not in current word, you cannot delete
-            if (lastLetter.parentElement.classList[1] !== 'current') return
+            // If you are not in current word, or in the first letter, you cannot delete
+            if (!lastLetter || lastLetter.parentElement.classList[1] !== 'current') return
             // Else, delete and move pointer back
             lastLetter.className = '';
             setLetterIndex(prev => prev -= 1);
@@ -69,7 +69,6 @@ export default function TypeBox({ text }) {
 
                             }
                             )}
-                            {misplacedLetters.map(misLet => <span>{misLet}</span>)}
                         </div>
                     )
                 })}
