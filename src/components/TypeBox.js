@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from 'react';
+import React, { useState, useRef } from 'react';
 import '../assets/styles/TypeBox.css';
 
 // import Word from './Word';
@@ -8,6 +8,7 @@ export default function TypeBox({ text }) {
     const splitText = text.split(' ');
 
     const [letterIndex, setLetterIndex] = useState(0);
+    const [misplacedLetters, setMisplacedLetters] = useState([]);
 
     const letterRefList = useRef([]);
     const addRef = (ref) => letterRefList.current.push(ref);
@@ -34,6 +35,13 @@ export default function TypeBox({ text }) {
             setLetterIndex(prev => prev -= 1);
             return
         }
+        // If typing after word has ended, letters are appended to word until you press spacebar or backspace
+        // I cannot so that... For now, it just does nothing
+        if (currentLetter.parentElement.classList[1] !== 'current') {
+            return
+        }
+
+
         // Check user input with current letter
         const correct = event.key === currentLetter.innerText;
         currentLetter.classList.add(correct ? 'correct' : 'incorrect');
@@ -52,9 +60,16 @@ export default function TypeBox({ text }) {
                     return (
                         <div key={i} className='word'>
                             {word.split('').map((letter, index) => {
-                                return <p key={index} ref={addRef}>{letter}</p>
+                                // if (i !== word.length - 1) {
+                                    return <p key={index} ref={addRef}>{letter}</p>
+                                // }
+                                // else {
+                                //     return <p key={index} ref={addRef}>{letter} + {misplacedLetters.map(misLet => <span>{misLet}</span>)}</p>
+                                // }
+
                             }
                             )}
+                            {misplacedLetters.map(misLet => <span>{misLet}</span>)}
                         </div>
                     )
                 })}
