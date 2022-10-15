@@ -8,7 +8,6 @@ export default function TypeBox({ text }) {
     const splitText = text.split(' ');
 
     const [letterIndex, setLetterIndex] = useState(0);
-    const [misplacedLetters, setMisplacedLetters] = useState([]);
 
     const letterRefList = useRef([]);
     const addRef = (ref) => letterRefList.current.push(ref);
@@ -16,6 +15,7 @@ export default function TypeBox({ text }) {
     const handleKeyDown = (event) => {
         const currentLetter = letterRefList.current[letterIndex];
         const lastLetter = letterRefList.current[letterIndex - 1];
+        console.log(letterRefList)
 
         // First letter sets first word as current word
         if (letterIndex === 0) {
@@ -30,6 +30,7 @@ export default function TypeBox({ text }) {
         if (event.key === 'Backspace') {
             // If you are not in current word, or in the first letter, you cannot delete
             if (!lastLetter || lastLetter.parentElement.classList[1] !== 'current') return
+            // If you are deleting a misplaced letter attached to the last letter of the word, it is removed and, eventually, the 'misplaced' class goes off too
             if (lastLetter.classList.contains('misplaced')) {
                 if (lastLetter.innerText.length === 2) {
                     lastLetter.classList.remove('misplaced');
@@ -65,15 +66,8 @@ export default function TypeBox({ text }) {
                     return (
                         <div key={i} className='word'>
                             {word.split('').map((letter, index) => {
-                                // if (i !== word.length - 1) {
                                 return <p key={index} ref={addRef}>{letter}</p>
-                                // }
-                                // else {
-                                //     return <p key={index} ref={addRef}>{letter} + {misplacedLetters.map(misLet => <span>{misLet}</span>)}</p>
-                                // }
-
-                            }
-                            )}
+                            })}
                         </div>
                     )
                 })}
