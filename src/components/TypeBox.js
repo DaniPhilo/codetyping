@@ -30,24 +30,27 @@ export default function TypeBox({ text }) {
         if (event.key === 'Backspace') {
             // If you are not in current word, or in the first letter, you cannot delete
             if (!lastLetter || lastLetter.parentElement.classList[1] !== 'current') return
+            if (lastLetter.classList.contains('misplaced')) {
+                if (lastLetter.innerText.length === 2) {
+                    lastLetter.classList.remove('misplaced');
+                }
+                return lastLetter.innerText = lastLetter.innerText.slice(0, lastLetter.innerText.length - 1);
+            }
             // Else, delete and move pointer back
             lastLetter.className = '';
-            setLetterIndex(prev => prev -= 1);
-            return
+            return setLetterIndex(prev => prev -= 1);
         }
-        // If typing after word has ended, letters are appended to word until you press spacebar or backspace
-        // I cannot so that... For now, it just does nothing
+        // If typing after word has ended, letters are appended to last word until you press spacebar
         if (currentLetter.parentElement.classList[1] !== 'current') {
-            lastLetter.classList.add(lastLetter.classList[0] === 'correct' ? 'c-misplaced' : 'i-misplaced');
-            lastLetter.innerHTML += event.key;
-            return
+            lastLetter.classList.add('misplaced');
+            return lastLetter.innerHTML += event.key;
         }
 
 
         // Check user input with current letter
         const correct = event.key === currentLetter.innerText;
         currentLetter.classList.add(correct ? 'correct' : 'incorrect');
-        setLetterIndex(prev => prev += 1);
+        return setLetterIndex(prev => prev += 1);
     }
 
     return (
@@ -63,7 +66,7 @@ export default function TypeBox({ text }) {
                         <div key={i} className='word'>
                             {word.split('').map((letter, index) => {
                                 // if (i !== word.length - 1) {
-                                    return <p key={index} ref={addRef}>{letter}</p>
+                                return <p key={index} ref={addRef}>{letter}</p>
                                 // }
                                 // else {
                                 //     return <p key={index} ref={addRef}>{letter} + {misplacedLetters.map(misLet => <span>{misLet}</span>)}</p>

@@ -33,25 +33,24 @@
 .word > p {
     color: grey;
 }
-
 .word > .correct {
     color: black;
 }
-
 .word > .incorrect {
     color: red;
 }
-
-.word > .c-misplaced,
-.word > .i-misplaced {
+.word > .misplaced {
     color: brown;
 }
-.word > .c-misplaced::first-letter {
+
+/*Correct and incorrect first letters are re-styled because the misplaced class re-writes entire element*/
+.correct::first-letter {
     color: black;
 }
-.word > .i-misplaced::first-letter {
-    color: red
+.incorrect::first-letter {
+    color: red;
 }
+
 
 /* input {
     width: 100%;
