@@ -42,6 +42,17 @@
     color: red;
 }
 
+.word > .c-misplaced,
+.word > .i-misplaced {
+    color: brown;
+}
+.word > .c-misplaced::first-letter {
+    color: black;
+}
+.word > .i-misplaced::first-letter {
+    color: red
+}
+
 /* input {
     width: 100%;
     background-color: transparent;

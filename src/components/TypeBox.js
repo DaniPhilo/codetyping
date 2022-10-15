@@ -38,6 +38,8 @@ export default function TypeBox({ text }) {
         // If typing after word has ended, letters are appended to word until you press spacebar or backspace
         // I cannot so that... For now, it just does nothing
         if (currentLetter.parentElement.classList[1] !== 'current') {
+            lastLetter.classList.add(lastLetter.classList[0] === 'correct' ? 'c-misplaced' : 'i-misplaced');
+            lastLetter.innerHTML += event.key;
             return
         }
 
