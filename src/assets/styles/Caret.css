@@ -1,0 +1,9 @@
+#caret {
+    position: absolute;
+    top: 0.1em;
+    left: 0;
+    width: 2px;
+    height: 1em;
+    background-color: green;
+    transition: 0.25s ease-in-out;
+}
