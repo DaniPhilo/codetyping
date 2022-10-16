@@ -25,8 +25,8 @@ export default function TypeBox({ text }) {
         // Spacebar moves current class to next word
         if (event.key === ' ' && !lastLetter.nextSibling) {
             lastLetter.parentElement.classList.remove('current');
-            // setCaretPosition(prev => prev += 12);
-            return currentLetter.parentElement.classList.add('current');
+            currentLetter.parentElement.classList.add('current');
+            return setCaretPosition(currentLetter.offsetLeft);
         }
         // Backspace removes classes from letter only if word is current
         if (event.key === 'Backspace') {
@@ -37,24 +37,31 @@ export default function TypeBox({ text }) {
                 if (lastLetter.innerText.length === 2) {
                     lastLetter.classList.remove('misplaced');
                 }
-                return lastLetter.innerText = lastLetter.innerText.slice(0, lastLetter.innerText.length - 1);
+                lastLetter.innerText = lastLetter.innerText.slice(0, lastLetter.innerText.length - 1);
+                return setCaretPosition(prev => prev -= 15);
             }
             // Else, delete and move pointer back
             lastLetter.className = '';
-            return setLetterIndex(prev => prev -= 1);
+            setLetterIndex(prev => prev -= 1);
+            return setCaretPosition(lastLetter.offsetLeft);
         }
         // If typing after word has ended, letters are appended to last word until you press spacebar
         if (currentLetter.parentElement.classList[1] !== 'current') {
             lastLetter.classList.add('misplaced');
-            return lastLetter.innerHTML += event.key;
+            lastLetter.innerHTML += event.key;
+            return setCaretPosition(prev => prev += 15);
         }
+        // The caret moves to the next letter, except if it is the last one (it should wait for the spacebar then)
 
 
         // Check user input with current letter
         const correct = event.key === currentLetter.innerText;
         currentLetter.classList.add(correct ? 'correct' : 'incorrect');
-        setCaretPosition(prev => nextLetter.offsetLeft);
-        return setLetterIndex(prev => prev += 1);
+        setLetterIndex(prev => prev += 1);
+        if (!currentLetter.nextSibling) {
+            return setCaretPosition(prev => prev += 15)
+        }
+        return setCaretPosition(nextLetter.offsetLeft);
     }
 
     return (
@@ -65,7 +72,7 @@ export default function TypeBox({ text }) {
             </div>
 
             <div className="text-container">
-                <Caret caretPosition={caretPosition}/>
+                <Caret caretPosition={caretPosition} />
                 {splitText.map((word, i) => {
                     return (
                         <div key={i} className='word'>
