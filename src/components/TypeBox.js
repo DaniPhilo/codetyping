@@ -8,7 +8,7 @@ export default function TypeBox({ text }) {
     const splitText = text.split(' ');
 
     const [letterIndex, setLetterIndex] = useState(0);
-    const [caretPosition, setCaretPosition] = useState(0);
+    const [caretPosition, setCaretPosition] = useState([]);
 
     const letterRefList = useRef([]);
     const addRef = (ref) => letterRefList.current.push(ref);
@@ -18,15 +18,18 @@ export default function TypeBox({ text }) {
         const lastLetter = letterRefList.current[letterIndex - 1];
         const nextLetter = letterRefList.current[letterIndex + 1];
 
+        console.log(currentLetter.parentElement.offsetWidth)
+
         // First letter sets first word as current word
         if (letterIndex === 0) {
             currentLetter.parentElement.classList.add('current');
         }
         // Spacebar moves current class to next word
         if (event.key === ' ' && !lastLetter.nextSibling) {
+            console.log('spacebar on end of word');
             lastLetter.parentElement.classList.remove('current');
             currentLetter.parentElement.classList.add('current');
-            return setCaretPosition(currentLetter.offsetLeft);
+            return setCaretPosition([currentLetter.offsetLeft, currentLetter.offsetTop]);
         }
         // Backspace removes classes from letter only if word is current
         if (event.key === 'Backspace') {
@@ -34,34 +37,43 @@ export default function TypeBox({ text }) {
             if (!lastLetter || lastLetter.parentElement.classList[1] !== 'current') return
             // If you are deleting a misplaced letter attached to the last letter of the word, it is removed and, eventually, the 'misplaced' class goes off too
             if (lastLetter.classList.contains('misplaced')) {
+                console.log('backspace on misplaced');
                 if (lastLetter.innerText.length === 2) {
                     lastLetter.classList.remove('misplaced');
                 }
                 lastLetter.innerText = lastLetter.innerText.slice(0, lastLetter.innerText.length - 1);
-                return setCaretPosition(prev => prev -= 15);
+                // For some reason I don't understand, in this scenario caretPosition[0] is incremented DOUBLE the number I say. That's why I write half a letter, since it's going to double it
+                return setCaretPosition(prev => [prev[0] -= 7.5, prev[1]]);
             }
             // Else, delete and move pointer back
+            console.log('backspace');
             lastLetter.className = '';
             setLetterIndex(prev => prev -= 1);
-            return setCaretPosition(lastLetter.offsetLeft);
+            return setCaretPosition([lastLetter.offsetLeft, lastLetter.offsetTop]);
         }
         // If typing after word has ended, letters are appended to last word until you press spacebar
         if (currentLetter.parentElement.classList[1] !== 'current') {
+            console.log('misplaced letter');
             lastLetter.classList.add('misplaced');
             lastLetter.innerHTML += event.key;
-            return setCaretPosition(prev => prev += 15);
+            // For some reason I don't understand, in this scenario caretPosition[0] is incremented DOUBLE the number I say. That's why I write half a letter, since it's going to double it
+            return setCaretPosition(prev => [prev[0] += 7.5, prev[1]]);
         }
-        // The caret moves to the next letter, except if it is the last one (it should wait for the spacebar then)
 
 
         // Check user input with current letter
         const correct = event.key === currentLetter.innerText;
         currentLetter.classList.add(correct ? 'correct' : 'incorrect');
         setLetterIndex(prev => prev += 1);
+
+        // The caret moves to the next letter, except if it is the last one (it should wait for the spacebar then)
         if (!currentLetter.nextSibling) {
-            return setCaretPosition(prev => prev += 15)
+            console.log('last letter in word');
+            // For some reason I don't understand, in this scenario caretPosition[0] is incremented DOUBLE the number I say. That's why I write half a letter, since it's going to double it
+            return setCaretPosition(prev => [prev[0] += 7.5, prev[1]])
         }
-        return setCaretPosition(nextLetter.offsetLeft);
+        console.log('common letter');
+        return setCaretPosition([nextLetter.offsetLeft, nextLetter.offsetTop]);
     }
 
     return (
