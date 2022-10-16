@@ -21,15 +21,18 @@ export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOve
     }
 
     const calculateUserResults = (refs) => {
-
+        // Calculates accuracy based on number of letters - letters typed correctly
         const totalLetters = refs.filter(ref => ref.classList.length > 0).map(p => p.innerText).join('').length;
         console.log('Total letters: ' + totalLetters)
         const numberOfIncorrect = refs.filter(ref => ref.classList.contains('incorrect')).length;
         console.log('Incorrect letters: ' + numberOfIncorrect)
         const numberOfMisplaced = refs.filter(ref => ref.classList.contains('misplaced')).map(p => p.innerText.slice(1)).join('').length;
         console.log('Misplaced letters: ' + numberOfMisplaced)
-        console.log('Result: ' + [Math.round(100 - (numberOfIncorrect + numberOfMisplaced) * 100 / totalLetters)])
-        setUserResults([Math.round(100 - (numberOfIncorrect + numberOfMisplaced) * 100 / totalLetters)]);
+        console.log('Result: ' + [Math.round(100 - (numberOfIncorrect + numberOfMisplaced) * 100 / totalLetters)]);
+        // Calculates wpm:
+        const wordsTyped = refs.filter(ref => ref.classList.length > 0).map(ref => ref.parentElement.lastChild === ref ? ref.innerText : null).join('').length - numberOfMisplaced;
+        console.log('Words typed: ' + wordsTyped);
+        setUserResults({ wordsTyped: totalLetters, accuracy: Math.round(100 - (numberOfIncorrect + numberOfMisplaced) * 100 / totalLetters), wpm: 60 / wordsTyped });
     }
 
     useEffect(() => {

@@ -14,9 +14,11 @@ export default function Main() {
   const [countDown, setCountDown] = useState(3);
   const [gameStarted, setGameStarted] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
-  const [userResults, setUserResults] = useState([]);
-
-
+  const [userResults, setUserResults] = useState({
+    wordsTyped: 0,
+    accuracy: 0,
+    wpm: 0
+  });
 
   return (
     <main>
