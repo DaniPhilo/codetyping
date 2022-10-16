@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import '../assets/styles/TypeBox.css';
 
 import Caret from './Caret';
@@ -21,20 +21,27 @@ export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOve
     }
 
     const calculateUserResults = (refs) => {
-        
+
         const totalLetters = refs.filter(ref => ref.classList.length > 0).map(p => p.innerText).join('').length;
-        console.log(totalLetters)
+        console.log('Total letters: ' + totalLetters)
         const numberOfIncorrect = refs.filter(ref => ref.classList.contains('incorrect')).length;
-        console.log('incorrect letters ' + numberOfIncorrect)
-        const numberOfMisplaced = refs.filter(ref => ref.classList.contains('misplaced')).map(p => p.innerText).join('').length - 1;
-        console.log('misplaced letters ' + numberOfMisplaced)
-        console.log('result ' + [Math.round(100 - (numberOfIncorrect + numberOfMisplaced) * 100 / totalLetters)])
+        console.log('Incorrect letters: ' + numberOfIncorrect)
+        const numberOfMisplaced = refs.filter(ref => ref.classList.contains('misplaced')).map(p => p.innerText.slice(1)).join('').length;
+        console.log('Misplaced letters: ' + numberOfMisplaced)
+        console.log('Result: ' + [Math.round(100 - (numberOfIncorrect + numberOfMisplaced) * 100 / totalLetters)])
         setUserResults([Math.round(100 - (numberOfIncorrect + numberOfMisplaced) * 100 / totalLetters)]);
     }
 
-    const handleKeyDown = (event) => {
+    useEffect(() => {
         if (isGameOver) {
             return calculateUserResults(letterRefList.current);
+        }
+        else return
+    }, [isGameOver]);
+
+    const handleKeyDown = (event) => {
+        if (isGameOver) {
+            return
         }
 
         const currentLetter = letterRefList.current[letterIndex];
