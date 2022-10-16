@@ -3,9 +3,10 @@ import '../assets/styles/TypeBox.css';
 
 import Caret from './Caret';
 
-export default function TypeBox({ text }) {
+export default function TypeBox({ text, isGameOver, setIsGameOver }) {
 
     const splitText = text.split(' ');
+    const noSpacesText = splitText.join('');
 
     const [letterIndex, setLetterIndex] = useState(0);
     const [caretPosition, setCaretPosition] = useState([]);
@@ -14,11 +15,11 @@ export default function TypeBox({ text }) {
     const addRef = (ref) => letterRefList.current.push(ref);
 
     const handleKeyDown = (event) => {
+        if (isGameOver) return
+
         const currentLetter = letterRefList.current[letterIndex];
         const lastLetter = letterRefList.current[letterIndex - 1];
         const nextLetter = letterRefList.current[letterIndex + 1];
-
-        console.log(event.key)
 
         // First letter sets first word as current word
         if (letterIndex === 0) {
@@ -28,6 +29,15 @@ export default function TypeBox({ text }) {
         // Shift, Capslock, Control, Alt or Meta don't count as letters:
         if (event.key === 'Shift' || event.key === 'CapsLock' || event.key === 'Control' || event.key === 'Alt' || event.key === 'Meta') {
             return
+        }
+
+        // If final letter, Game Over
+        if (letterIndex === noSpacesText.length - 1) {
+            const correct = event.key === currentLetter.innerText;
+            currentLetter.classList.add(correct ? 'correct' : 'incorrect');
+            setCaretPosition(prev => [prev[0] -= 7.5, prev[1]]);
+            console.log('Game over');
+            return setIsGameOver(true);
         }
 
         // Spacebar moves current class to next word
@@ -58,7 +68,7 @@ export default function TypeBox({ text }) {
             setLetterIndex(prev => prev -= 1);
             return setCaretPosition([lastLetter.offsetLeft, lastLetter.offsetTop]);
         }
-        
+
         // If typing after word has ended, letters are appended to last word until you press spacebar
         if (currentLetter.parentElement.classList[1] !== 'current') {
             console.log('misplaced letter');

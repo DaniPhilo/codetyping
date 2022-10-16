@@ -9,10 +9,11 @@ export default function Main() {
 
   const defaultText = Texts[0].text;
   const [text, setText] = useState(defaultText);
+  const [isGameOver, setIsGameOver] = useState(false);
 
   return (
     <main>
-      <TypeBox text={text} />
+      <TypeBox text={text} isGameOver={isGameOver} setIsGameOver={setIsGameOver} />
     </main>
   )
 }
