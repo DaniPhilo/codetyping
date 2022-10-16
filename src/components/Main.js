@@ -12,6 +12,7 @@ export default function Main() {
   const defaultText = Texts[0].text;
   const [text, setText] = useState(defaultText);
   const [countDown, setCountDown] = useState(15);
+  const [gameStarted, setGameStarted] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   const [userResults, setUserResults] = useState([]);
 
@@ -19,9 +20,9 @@ export default function Main() {
 
   return (
     <main>
-      <OptionsBox countDown={countDown} setCountDown={setCountDown} />
-      <Counter countDown={countDown} setCountDown={setCountDown} />
-      <TypeBox text={text} isGameOver={isGameOver} setIsGameOver={setIsGameOver} setUserResults={setUserResults} />
+      <OptionsBox setCountDown={setCountDown} />
+      <Counter gameStarted={gameStarted} setGameStarted={setGameStarted} countDown={countDown} setCountDown={setCountDown} setIsGameOver={setIsGameOver} />
+      <TypeBox text={text} gameStarted={gameStarted} setGameStarted={setGameStarted} isGameOver={isGameOver} setIsGameOver={setIsGameOver} setUserResults={setUserResults} />
     </main>
   )
 }

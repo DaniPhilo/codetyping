@@ -3,7 +3,7 @@ import '../assets/styles/TypeBox.css';
 
 import Caret from './Caret';
 
-export default function TypeBox({ text, isGameOver, setIsGameOver, setUserResults }) {
+export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOver, setUserResults }) {
 
     const splitText = text.split(' ');
     const noSpacesText = splitText.join('');
@@ -36,6 +36,7 @@ export default function TypeBox({ text, isGameOver, setIsGameOver, setUserResult
 
         // First letter sets first word as current word
         if (letterIndex === 0) {
+            setGameStarted(true);
             currentLetter.parentElement.classList.add('current');
         }
 
@@ -50,6 +51,7 @@ export default function TypeBox({ text, isGameOver, setIsGameOver, setUserResult
             currentLetter.classList.add(correct ? 'correct' : 'incorrect');
             setCaretPosition(prev => [prev[0] -= 7.5, prev[1]]);
             console.log('Game over');
+            setGameStarted(false);
             setIsGameOver(true);
             return calculateUserResults(letterRefList.current);
         }
