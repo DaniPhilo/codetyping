@@ -18,12 +18,18 @@ export default function TypeBox({ text }) {
         const lastLetter = letterRefList.current[letterIndex - 1];
         const nextLetter = letterRefList.current[letterIndex + 1];
 
-        console.log(currentLetter.parentElement.offsetWidth)
+        console.log(event.key)
 
         // First letter sets first word as current word
         if (letterIndex === 0) {
             currentLetter.parentElement.classList.add('current');
         }
+
+        // Shift, Capslock, Control, Alt or Meta don't count as letters:
+        if (event.key === 'Shift' || event.key === 'CapsLock' || event.key === 'Control' || event.key === 'Alt' || event.key === 'Meta') {
+            return
+        }
+
         // Spacebar moves current class to next word
         if (event.key === ' ' && !lastLetter.nextSibling) {
             console.log('spacebar on end of word');
@@ -31,6 +37,7 @@ export default function TypeBox({ text }) {
             currentLetter.parentElement.classList.add('current');
             return setCaretPosition([currentLetter.offsetLeft, currentLetter.offsetTop]);
         }
+
         // Backspace removes classes from letter only if word is current
         if (event.key === 'Backspace') {
             // If you are not in current word, or in the first letter, you cannot delete
@@ -51,6 +58,7 @@ export default function TypeBox({ text }) {
             setLetterIndex(prev => prev -= 1);
             return setCaretPosition([lastLetter.offsetLeft, lastLetter.offsetTop]);
         }
+        
         // If typing after word has ended, letters are appended to last word until you press spacebar
         if (currentLetter.parentElement.classList[1] !== 'current') {
             console.log('misplaced letter');
