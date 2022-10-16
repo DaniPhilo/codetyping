@@ -3,7 +3,7 @@ import '../assets/styles/TypeBox.css';
 
 import Caret from './Caret';
 
-export default function TypeBox({ text, isGameOver, setIsGameOver }) {
+export default function TypeBox({ text, isGameOver, setIsGameOver, setUserResults }) {
 
     const splitText = text.split(' ');
     const noSpacesText = splitText.join('');
@@ -12,7 +12,20 @@ export default function TypeBox({ text, isGameOver, setIsGameOver }) {
     const [caretPosition, setCaretPosition] = useState([]);
 
     const letterRefList = useRef([]);
-    const addRef = (ref) => letterRefList.current.push(ref);
+    const addRef = (ref) => {
+        // Refs persist in each re-render, so each time it would be pushed same paragraphs refs. Now it only pushes refs until the whole text letters is pushed.
+        if (letterRefList.current.length < noSpacesText.length) {
+            return letterRefList.current.push(ref);
+        }
+        return
+    }
+
+    const calculateUserResults = (refs) => {
+        const totalLetters = noSpacesText.length;
+        const numberOfIncorrect = refs.filter(ref => ref.classList.contains('incorrect')).length;
+        const numberOfMisplaced = refs.filter(ref => ref.classList.contains('misplaced')).map(p => p.length).length;
+        setUserResults([Math.round(100 - (numberOfIncorrect + numberOfMisplaced) * 100 / totalLetters)]);
+    }
 
     const handleKeyDown = (event) => {
         if (isGameOver) return
@@ -37,7 +50,8 @@ export default function TypeBox({ text, isGameOver, setIsGameOver }) {
             currentLetter.classList.add(correct ? 'correct' : 'incorrect');
             setCaretPosition(prev => [prev[0] -= 7.5, prev[1]]);
             console.log('Game over');
-            return setIsGameOver(true);
+            setIsGameOver(true);
+            return calculateUserResults(letterRefList.current);
         }
 
         // Spacebar moves current class to next word

@@ -10,10 +10,13 @@ export default function Main() {
   const defaultText = Texts[0].text;
   const [text, setText] = useState(defaultText);
   const [isGameOver, setIsGameOver] = useState(false);
+  const [userResults, setUserResults] = useState([]);
+
+  
 
   return (
     <main>
-      <TypeBox text={text} isGameOver={isGameOver} setIsGameOver={setIsGameOver} />
+      <TypeBox text={text} isGameOver={isGameOver} setIsGameOver={setIsGameOver} setUserResults={setUserResults} />
     </main>
   )
 }
