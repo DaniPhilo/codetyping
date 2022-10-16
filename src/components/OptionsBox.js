@@ -10,7 +10,8 @@ export default function OptionsBox({setCountDown}) {
     return (
         <div className='options-box'>
             <label htmlFor="select-countdown">Time:</label>
-            <select id="select-countdown" defaultValue={15} onChange={handleChange}>
+            <select id="select-countdown" defaultValue={3} onChange={handleChange}>
+                <option value="3">3</option>
                 <option value="15">15</option>
                 <option value="30">30</option>
                 <option value="45">45</option>

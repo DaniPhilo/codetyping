@@ -21,14 +21,21 @@ export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOve
     }
 
     const calculateUserResults = (refs) => {
-        const totalLetters = noSpacesText.length;
+        
+        const totalLetters = refs.filter(ref => ref.classList.length > 0).map(p => p.innerText).join('').length;
+        console.log(totalLetters)
         const numberOfIncorrect = refs.filter(ref => ref.classList.contains('incorrect')).length;
-        const numberOfMisplaced = refs.filter(ref => ref.classList.contains('misplaced')).map(p => p.length).length;
+        console.log('incorrect letters ' + numberOfIncorrect)
+        const numberOfMisplaced = refs.filter(ref => ref.classList.contains('misplaced')).map(p => p.innerText).join('').length - 1;
+        console.log('misplaced letters ' + numberOfMisplaced)
+        console.log('result ' + [Math.round(100 - (numberOfIncorrect + numberOfMisplaced) * 100 / totalLetters)])
         setUserResults([Math.round(100 - (numberOfIncorrect + numberOfMisplaced) * 100 / totalLetters)]);
     }
 
     const handleKeyDown = (event) => {
-        if (isGameOver) return
+        if (isGameOver) {
+            return calculateUserResults(letterRefList.current);
+        }
 
         const currentLetter = letterRefList.current[letterIndex];
         const lastLetter = letterRefList.current[letterIndex - 1];
