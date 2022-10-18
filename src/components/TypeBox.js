@@ -11,6 +11,9 @@ export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOve
     const [letterIndex, setLetterIndex] = useState(0);
     const [caretPosition, setCaretPosition] = useState([]);
 
+    let inputRef = useRef(null);
+    const focusInput = () => inputRef.current.focus();
+
     const letterRefList = useRef([]);
     const addRef = (ref) => {
         // Refs persist in each re-render, so each time it would be pushed same paragraphs refs. Now it only pushes refs until the whole text letters is pushed.
@@ -128,10 +131,10 @@ export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOve
     }
 
     return (
-        <section className="typebox-section">
+        <section className="typebox-section" onClick={focusInput} >
             <label>Type:</label>
             <div className='input-container'>
-                <input name="user-input" id='user-input' onKeyDown={handleKeyDown} />
+                <input name="user-input" id='user-input' ref={inputRef} onKeyDown={handleKeyDown} />
             </div>
 
             <div className="text-container">
