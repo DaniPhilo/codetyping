@@ -3,7 +3,7 @@ import '../assets/styles/TypeBox.css';
 
 import Caret from './Caret';
 
-export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOver, setUserResults }) {
+export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOver, setUserResults, wpmRatio }) {
 
     const splitText = text.split(' ');
     const noSpacesText = splitText.join('');
@@ -30,12 +30,9 @@ export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOve
         console.log('Misplaced letters: ' + numberOfMisplaced)
         console.log('Result: ' + [Math.round(100 - (numberOfIncorrect + numberOfMisplaced) * 100 / totalLetters)]);
 
-        // Calculates wpm:
-        // TO DO: CREATE METHOD TO CALCULATE WPM BASED ON COUNTDOWN (15, 30, 45, 60). SEE: https://www.speedtypingonline.com/typing-equations
-        
         const wordsTyped = refs.filter(ref => ref.classList.length > 0).map(ref => ref.parentElement.lastChild === ref ? ref.innerText : null).join('').length - numberOfMisplaced;
         console.log('Words typed: ' + wordsTyped);
-        setUserResults({ wordsTyped: totalLetters, accuracy: Math.round(100 - (numberOfIncorrect + numberOfMisplaced) * 100 / totalLetters), wpm: 60 / wordsTyped });
+        setUserResults({ wordsTyped: totalLetters, accuracy: Math.round(100 - (numberOfIncorrect + numberOfMisplaced) * 100 / totalLetters), wpm: wordsTyped * wpmRatio });
     }
 
     useEffect(() => {

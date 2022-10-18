@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import '../assets/styles/Main.css';
 
 import OptionsBox from './OptionsBox';
@@ -12,6 +12,7 @@ export default function Main() {
   const defaultText = Texts[0].text;
   const [text, setText] = useState(defaultText);
   const [countDown, setCountDown] = useState(3);
+  const [wpmRatio, setWpmRatio] = useState(3);
   const [gameStarted, setGameStarted] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   const [userResults, setUserResults] = useState({
@@ -22,9 +23,9 @@ export default function Main() {
 
   return (
     <main>
-      <OptionsBox setCountDown={setCountDown} />
+      <OptionsBox setCountDown={setCountDown} setWpmRatio={setWpmRatio} />
       <Counter gameStarted={gameStarted} setGameStarted={setGameStarted} countDown={countDown} setCountDown={setCountDown} setIsGameOver={setIsGameOver} />
-      <TypeBox text={text} gameStarted={gameStarted} setGameStarted={setGameStarted} isGameOver={isGameOver} setIsGameOver={setIsGameOver} setUserResults={setUserResults} />
+      <TypeBox text={text} gameStarted={gameStarted} setGameStarted={setGameStarted} isGameOver={isGameOver} setIsGameOver={setIsGameOver} setUserResults={setUserResults} wpmRatio={wpmRatio} />
     </main>
   )
 }

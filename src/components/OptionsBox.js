@@ -1,12 +1,13 @@
 import React from 'react';
 import '../assets/styles/OptionsBox.css';
 
-export default function OptionsBox({setCountDown}) {
+export default function OptionsBox({ setCountDown, setWpmRatio }) {
 
     const handleChange = (event) => {
         setCountDown(event.target.value);
+        setWpmRatio(60 / event.target.value);
     }
-    
+
     return (
         <div className='options-box'>
             <label htmlFor="select-countdown">Time:</label>
