@@ -4,8 +4,8 @@ import '../assets/styles/OptionsBox.css';
 export default function OptionsBox({ setCountDown, setWpmRatio }) {
 
     const handleChange = (event) => {
-        setCountDown(event.target.value);
-        setWpmRatio(60 / event.target.value);
+        setCountDown(Number(event.target.value));
+        setWpmRatio(60 / Number(event.target.value));
     }
 
     return (

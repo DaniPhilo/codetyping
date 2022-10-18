@@ -11,8 +11,8 @@ export default function Main() {
 
   const defaultText = Texts[0].text;
   const [text, setText] = useState(defaultText);
-  const [countDown, setCountDown] = useState(3);
-  const [wpmRatio, setWpmRatio] = useState(3);
+  const [countDown, setCountDown] = useState(15);
+  const [wpmRatio, setWpmRatio] = useState(4);
   const [gameStarted, setGameStarted] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
   const [userResults, setUserResults] = useState({

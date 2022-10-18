@@ -32,7 +32,7 @@ export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOve
 
         const wordsTyped = refs.filter(ref => ref.classList.length > 0).map(ref => ref.parentElement.lastChild === ref ? ref.innerText : null).join('').length - numberOfMisplaced;
         console.log('Words typed: ' + wordsTyped);
-        setUserResults({ wordsTyped: totalLetters, accuracy: Math.round(100 - (numberOfIncorrect + numberOfMisplaced) * 100 / totalLetters), wpm: wordsTyped * wpmRatio });
+        setUserResults({ wordsTyped: wordsTyped, accuracy: Math.round(100 - (numberOfIncorrect + numberOfMisplaced) * 100 / totalLetters), wpm: wordsTyped * wpmRatio });
     }
 
     useEffect(() => {
