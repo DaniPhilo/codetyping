@@ -5,6 +5,7 @@
     --text-color: rgba(255, 255, 255, 0.87);
     --text-light-color: rgba(255, 255, 255, 0.6);
     --text-disabled-color: rgba(255, 255, 255, 0.38);
+    --modal-bg-color: rgba(60, 60, 62, 0.8);
 }
 
 * {

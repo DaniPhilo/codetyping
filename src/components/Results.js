@@ -12,11 +12,11 @@ export default function Results({ userResults, setIsGameOver, setCountDown }) {
         <aside>
             <div className="results-container">
                 <div className="accuracy-results-container">
-                    <h3>Accuracy:</h3>
+                    <h3>Accuracy</h3>
                     <span className="accuracy-result">{userResults.accuracy}</span>
                 </div>
                 <div className="wpm-results-container">
-                    <h3>WPM:</h3>
+                    <h3>WPM</h3>
                     <span className="wpm-result">{userResults.wpm}</span>
                 </div>
                 <button onClick={closeModal}>X</button>

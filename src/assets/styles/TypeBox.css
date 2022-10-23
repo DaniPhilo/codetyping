@@ -17,7 +17,7 @@
     position: absolute;
     top: 2%;
     left: 2%;
-    /* opacity: 0; */
+    opacity: 0;
 }
 .input-container > input {
     width: 100px;

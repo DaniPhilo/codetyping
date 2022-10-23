@@ -2,7 +2,50 @@ aside {
     position: absolute;
     top: 0;
     left: 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
     width: 100vw;
     height: 100vh;
+
+    background-color: var(--modal-bg-color);
 }
 
+.results-container {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 2rem;
+
+    padding: 4rem;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border-radius: 5px;
+}
+
+.results-container > div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+}
+
+.results-container > button {
+    position: absolute;
+    top: 5%;
+    right: 5%;
+
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    border: none;
+    font-size: 1.5em;
+    cursor: pointer;
+}
+
+.results-container > div > span {
+    color: var(--accent-color);
+}
