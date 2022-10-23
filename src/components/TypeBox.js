@@ -43,8 +43,8 @@ export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOve
             setLetterIndex(0);
             setCaretPosition([0, 0]);
             calculateUserResults(letterRefList.current);
+            letterRefList.current.forEach(el => el.innerText = el.innerText[0]);
             letterRefList.current.map(el => el.classList = '');
-            console.log(inputRef.current.value = '');
         }
         else return
     }, [isGameOver]);
@@ -60,8 +60,10 @@ export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOve
 
         // First letter sets first word as current word
         if (letterIndex === 0) {
+            const words = Array.from(currentLetter.parentElement.parentElement.children).filter(el => !el.id);
+            console.log(words)
             setGameStarted(true);
-            currentLetter.parentElement.classList.add('current');
+            words.forEach((el, i) => i === 0 ? el.classList = "word current" : el.classList = "word");
         }
 
         // Shift, Capslock, Control, Alt or Meta don't count as letters:
@@ -135,24 +137,27 @@ export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOve
     }
 
     return (
-        <section className="typebox-section" onClick={focusInput} >
+        <section className="typebox-section" >
             <label>Type:</label>
             <div className='input-container'>
                 <input name="user-input" id='user-input' ref={inputRef} onKeyDown={handleKeyDown} />
             </div>
 
-            <div className="text-container">
-                <Caret caretPosition={caretPosition} />
-                {splitText.map((word, i) => {
-                    return (
-                        <div key={i} className='word'>
-                            {word.split('').map((letter, index) => {
-                                return <p key={index} ref={addRef}>{letter}</p>
-                            })}
-                        </div>
-                    )
-                })}
+            <div className='text-padding-wrapper' onClick={focusInput}>
+                <div className="text-container">
+                    <Caret caretPosition={caretPosition} />
+                    {splitText.map((word, i) => {
+                        return (
+                            <div key={i} className='word'>
+                                {word.split('').map((letter, index) => {
+                                    return <p key={index} ref={addRef}>{letter}</p>
+                                })}
+                            </div>
+                        )
+                    })}
+                </div>
             </div>
+
         </section>
     )
 }

@@ -8,7 +8,26 @@
 
     width: 90%;
     margin: 1rem auto;
+    padding: 1.5rem;
+
     font-size: 1.5rem;
+}
+
+.input-container {
+    position: absolute;
+    top: 2%;
+    left: 2%;
+    /* opacity: 0; */
+}
+.input-container > input {
+    width: 100px;
+}
+
+.text-padding-wrapper {
+    width: 100%;
+    padding: 1rem;
+    background-color: var(--secondary-color);
+    border-radius: 5px;
 }
 
 .text-container {
@@ -20,22 +39,16 @@
     width: 100%;
 }
 
-.input-container {
-    position: absolute;
-    top: 2%;
-    left: 2%;
-}
-
 .word {
     display: flex;
     gap: 0.5px;
 }
 
 .word > p {
-    color: grey;
+    color: var(--text-disabled-color);
 }
 .word > .correct {
-    color: black;
+    color: var(--text-color);
 }
 .word > .incorrect {
     color: red;
@@ -46,7 +59,7 @@
 
 /*Correct and incorrect first letters are re-styled because the misplaced class re-writes entire element*/
 .correct::first-letter {
-    color: black;
+    color: var(--text-color);
 }
 .incorrect::first-letter {
     color: red;

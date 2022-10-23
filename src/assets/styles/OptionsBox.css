@@ -1,0 +1,20 @@
+.options-box {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+}
+
+#select-countdown {
+    background-color: var(--secondary-color);
+    color: var(--text-color);
+    border: 1px solid var(--secondary-color);
+    border-radius: 5px;
+    transition: 0.25s ease-in-out;
+}
+#select-countdown:hover {
+    border: 1px solid var(--text-light-color);
+}
+#select-countdown:focus {
+    border: 1px solid var(--accent-color);
+}

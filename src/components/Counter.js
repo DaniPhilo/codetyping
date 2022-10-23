@@ -17,7 +17,7 @@ export default function Counter({ gameStarted, setGameStarted, countDown, setCou
 
 
     return (
-        <div>
+        <div className='counter-container'>
             <div className='counter'>{countDown}</div>
         </div>
 
