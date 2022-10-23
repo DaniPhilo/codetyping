@@ -4,6 +4,7 @@ import '../assets/styles/Main.css';
 import OptionsBox from './OptionsBox';
 import Counter from './Counter';
 import TypeBox from './TypeBox';
+import Results from './Results';
 
 const Texts = require('../services/db/texts.json');
 
@@ -11,7 +12,7 @@ export default function Main() {
 
   const defaultText = Texts[0].text;
   const [text, setText] = useState(defaultText);
-  const [countDown, setCountDown] = useState(15);
+  const [countDown, setCountDown] = useState(3);
   const [wpmRatio, setWpmRatio] = useState(4);
   const [gameStarted, setGameStarted] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
@@ -24,8 +25,12 @@ export default function Main() {
   return (
     <main>
       <OptionsBox setCountDown={setCountDown} setWpmRatio={setWpmRatio} />
+
       <Counter gameStarted={gameStarted} setGameStarted={setGameStarted} countDown={countDown} setCountDown={setCountDown} setIsGameOver={setIsGameOver} />
+      
       <TypeBox text={text} gameStarted={gameStarted} setGameStarted={setGameStarted} isGameOver={isGameOver} setIsGameOver={setIsGameOver} setUserResults={setUserResults} wpmRatio={wpmRatio} />
+      
+      {isGameOver && <Results userResults={userResults} setIsGameOver={setIsGameOver} setCountDown={setCountDown}/>}
     </main>
   )
 }

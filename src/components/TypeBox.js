@@ -40,7 +40,11 @@ export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOve
 
     useEffect(() => {
         if (isGameOver) {
-            return calculateUserResults(letterRefList.current);
+            setLetterIndex(0);
+            setCaretPosition([0, 0]);
+            calculateUserResults(letterRefList.current);
+            letterRefList.current.map(el => el.classList = '');
+            console.log(inputRef.current.value = '');
         }
         else return
     }, [isGameOver]);
