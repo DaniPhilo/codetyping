@@ -67,7 +67,6 @@ export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOve
         // First letter sets first word as current word
         if (letterIndex === 0) {
             const words = Array.from(currentLetter.parentElement.parentElement.children).filter(el => !el.id);
-            console.log(words)
             setGameStarted(true);
             words.forEach((el, i) => i === 0 ? el.classList = "word current" : el.classList = "word");
         }
@@ -89,7 +88,6 @@ export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOve
 
         // Spacebar moves current class to next word
         if (event.key === ' ' && !lastLetter.nextSibling) {
-            console.log('spacebar on end of word');
             lastLetter.parentElement.classList.remove('current');
             currentLetter.parentElement.classList.add('current');
             return setCaretPosition([currentLetter.offsetLeft + 16, currentLetter.offsetTop + 16]);
@@ -101,7 +99,6 @@ export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOve
             if (!lastLetter || lastLetter.parentElement.classList[1] !== 'current') return
             // If you are deleting a misplaced letter attached to the last letter of the word, it is removed and, eventually, the 'misplaced' class goes off too
             if (lastLetter.classList.contains('misplaced')) {
-                console.log('backspace on misplaced');
                 if (lastLetter.innerText.length === 2) {
                     lastLetter.classList.remove('misplaced');
                 }
@@ -110,7 +107,6 @@ export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOve
                 return setCaretPosition(prev => [prev[0] -= 7.5, prev[1]]);
             }
             // Else, delete and move pointer back
-            console.log('backspace');
             lastLetter.className = '';
             setLetterIndex(prev => prev -= 1);
             return setCaretPosition([lastLetter.offsetLeft + 16, lastLetter.offsetTop + 16]);
@@ -118,7 +114,6 @@ export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOve
 
         // If typing after word has ended, letters are appended to last word until you press spacebar
         if (currentLetter.parentElement.classList[1] !== 'current') {
-            console.log('misplaced letter');
             lastLetter.classList.add('misplaced');
             lastLetter.innerHTML += event.key;
             // For some reason I don't understand, in this scenario caretPosition[0] is incremented DOUBLE the number I say. That's why I write half a letter, since it's going to double it
@@ -133,13 +128,10 @@ export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOve
 
         // The caret moves to the next letter, except if it is the last one (it should wait for the spacebar then)
         if (!currentLetter.nextSibling) {
-            console.log('last letter in word');
             // For some reason I don't understand, in this scenario caretPosition[0] is incremented DOUBLE the number I say. That's why I write half a letter, since it's going to double it
             
             return setCaretPosition(prev => [prev[0] += 7.5, prev[1]])
         }
-        console.log('common letter');
-        console.log(nextLetter.offsetLeft, nextLetter.offsetTop)
         return setCaretPosition([nextLetter.offsetLeft + 16, nextLetter.offsetTop + 16]);
     }
 

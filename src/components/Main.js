@@ -10,7 +10,7 @@ const Texts = require('../services/db/texts.json');
 
 export default function Main() {
 
-  const defaultText = Texts[0].text;
+  const defaultText = Texts[1].text;
   const [text, setText] = useState(defaultText);
   const [countDown, setCountDown] = useState(3);
   const [wpmRatio, setWpmRatio] = useState(4);
