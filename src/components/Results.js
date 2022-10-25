@@ -5,7 +5,7 @@ export default function Results({ userResults, setIsGameOver, setCountDown }) {
 
     const closeModal = () => {
         setIsGameOver(false);
-        setCountDown(3);
+        setCountDown(15);
     }
 
     return (

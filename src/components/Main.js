@@ -12,7 +12,7 @@ export default function Main() {
 
   const defaultText = Texts[1].text;
   const [text, setText] = useState(defaultText);
-  const [countDown, setCountDown] = useState(3);
+  const [countDown, setCountDown] = useState(15);
   const [wpmRatio, setWpmRatio] = useState(4);
   const [gameStarted, setGameStarted] = useState(false);
   const [isGameOver, setIsGameOver] = useState(false);
@@ -24,7 +24,7 @@ export default function Main() {
 
   return (
     <main>
-      <OptionsBox setCountDown={setCountDown} setWpmRatio={setWpmRatio} />
+      <OptionsBox setCountDown={setCountDown} setWpmRatio={setWpmRatio} isGameOver={isGameOver} />
 
       <Counter gameStarted={gameStarted} setGameStarted={setGameStarted} countDown={countDown} setCountDown={setCountDown} setIsGameOver={setIsGameOver} />
       
