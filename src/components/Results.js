@@ -13,7 +13,7 @@ export default function Results({ userResults, setIsGameOver, setCountDown }) {
             <div className="results-container">
                 <div className="accuracy-results-container">
                     <h3>Accuracy</h3>
-                    <span className="accuracy-result">{userResults.accuracy}</span>
+                    <span className="accuracy-result">{`${userResults.accuracy}%`}</span>
                 </div>
                 <div className="wpm-results-container">
                     <h3>WPM</h3>
