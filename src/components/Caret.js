@@ -1,10 +1,10 @@
 import React from 'react';
 import '../assets/styles/Caret.css';
 
-export default function Caret({ caretPosition }) {
+export default function Caret({ caretPosition, caretAnimation }) {
 
     return (
-        <div id='caret' style={{left: `${caretPosition[0]}px`, top: caretPosition[1]}}></div>
+        <div className={caretAnimation ? 'caret' : 'caret-off'} style={{ left: `${caretPosition[0]}px`, top: `${caretPosition[1]}px` }}></div>
     )
 }
 

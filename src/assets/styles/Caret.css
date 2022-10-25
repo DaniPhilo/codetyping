@@ -1,9 +1,33 @@
-#caret {
+.caret {
     position: absolute;
     top: 0.1em;
     left: 0;
     width: 2px;
     height: 1em;
     background-color: green;
-    transition: 0.25s ease-in-out;
+    transition: position 0.25s ease-in-out;
+
+    animation-name: flicker;
+    animation-duration: 0.75s;
+    animation-iteration-count: infinite;
+    animation-timing-function: ease-in-out;
+}
+
+.caret-off {
+    position: absolute;
+    top: 0.1em;
+    left: 0;
+    width: 2px;
+    height: 1em;
+    opacity: 0;
+}
+
+@keyframes flicker {
+    from {
+        opacity: 100;
+    }
+
+    to {
+        opacity: 0;
+    }
 }

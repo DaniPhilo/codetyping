@@ -10,9 +10,14 @@ export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOve
 
     const [letterIndex, setLetterIndex] = useState(0);
     const [caretPosition, setCaretPosition] = useState([]);
+    const [caretAnimation, setCaretAnimation] = useState(false);
 
     let inputRef = useRef(null);
-    const focusInput = () => inputRef.current.focus();
+    const focusInput = () => {
+        inputRef.current.focus();
+        setCaretPosition([16, 16])
+        setCaretAnimation(true);
+    }
 
     const letterRefList = useRef([]);
     const addRef = (ref) => {
@@ -41,7 +46,8 @@ export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOve
     useEffect(() => {
         if (isGameOver) {
             setLetterIndex(0);
-            setCaretPosition([0, 0]);
+            setCaretPosition([16, 16]);
+            setCaretAnimation(false);
             calculateUserResults(letterRefList.current);
             letterRefList.current.forEach(el => el.innerText = el.innerText[0]);
             letterRefList.current.map(el => el.classList = '');
@@ -75,7 +81,6 @@ export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOve
         if (letterIndex === noSpacesText.length - 1) {
             const correct = event.key === currentLetter.innerText;
             currentLetter.classList.add(correct ? 'correct' : 'incorrect');
-            setCaretPosition(prev => [prev[0] -= 7.5, prev[1]]);
             console.log('Game over');
             setGameStarted(false);
             setIsGameOver(true);
@@ -87,7 +92,7 @@ export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOve
             console.log('spacebar on end of word');
             lastLetter.parentElement.classList.remove('current');
             currentLetter.parentElement.classList.add('current');
-            return setCaretPosition([currentLetter.offsetLeft, currentLetter.offsetTop]);
+            return setCaretPosition([currentLetter.offsetLeft + 16, currentLetter.offsetTop + 16]);
         }
 
         // Backspace removes classes from letter only if word is current
@@ -108,7 +113,7 @@ export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOve
             console.log('backspace');
             lastLetter.className = '';
             setLetterIndex(prev => prev -= 1);
-            return setCaretPosition([lastLetter.offsetLeft, lastLetter.offsetTop]);
+            return setCaretPosition([lastLetter.offsetLeft + 16, lastLetter.offsetTop + 16]);
         }
 
         // If typing after word has ended, letters are appended to last word until you press spacebar
@@ -130,10 +135,12 @@ export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOve
         if (!currentLetter.nextSibling) {
             console.log('last letter in word');
             // For some reason I don't understand, in this scenario caretPosition[0] is incremented DOUBLE the number I say. That's why I write half a letter, since it's going to double it
+            
             return setCaretPosition(prev => [prev[0] += 7.5, prev[1]])
         }
         console.log('common letter');
-        return setCaretPosition([nextLetter.offsetLeft, nextLetter.offsetTop]);
+        console.log(nextLetter.offsetLeft, nextLetter.offsetTop)
+        return setCaretPosition([nextLetter.offsetLeft + 16, nextLetter.offsetTop + 16]);
     }
 
     return (
@@ -144,8 +151,8 @@ export default function TypeBox({ text, isGameOver, setGameStarted, setIsGameOve
             </div>
 
             <div className='text-padding-wrapper' onClick={focusInput}>
+                <Caret caretPosition={caretPosition} caretAnimation={caretAnimation} />
                 <div className="text-container">
-                    <Caret caretPosition={caretPosition} />
                     {splitText.map((word, i) => {
                         return (
                             <div key={i} className='word'>

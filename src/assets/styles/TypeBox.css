@@ -24,6 +24,7 @@
 }
 
 .text-padding-wrapper {
+    position: relative;
     width: 100%;
     padding: 1rem;
     background-color: var(--secondary-color);
